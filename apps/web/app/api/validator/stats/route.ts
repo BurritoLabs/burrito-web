@@ -29,8 +29,8 @@ const CACHE_TTL_MS = 5 * 60 * 1000;
 const statsCache = new Map<string, Cached>();
 
 async function fetchDelegatorCount(LCD: string, valoper: string) {
-  const totals = new Map<string, bigint>();
-  const minAmount = 1n; // 0.000001 LUNC (1 uluna)
+  const totals = new Map<string, number>();
+  const minAmount = 1; // 0.000001 LUNC (1 uluna)
   let key: string | undefined;
   let pages = 0;
 
@@ -46,12 +46,9 @@ async function fetchDelegatorCount(LCD: string, valoper: string) {
       const addr = item?.delegation?.delegator_address;
       const amount = item?.balance?.amount;
       if (!addr || !amount) continue;
-      try {
-        const value = BigInt(amount);
-        totals.set(addr, (totals.get(addr) ?? 0n) + value);
-      } catch {
-        // ignore invalid amounts
-      }
+      const value = Number(amount);
+      if (!Number.isFinite(value)) continue;
+      totals.set(addr, (totals.get(addr) ?? 0) + value);
     }
 
     key = j?.pagination?.next_key ?? undefined;
