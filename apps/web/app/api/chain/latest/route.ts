@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { Buffer } from "buffer";
 
 export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 type LatestOk = { ok: true; height: number; hash: string };
 
