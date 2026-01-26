@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { Buffer } from "buffer";
 
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
@@ -44,8 +43,10 @@ async function getStakingValidators(LCD: string): Promise<any[]> {
 }
 
 function b64ToBytes(b64: string): Uint8Array {
-  const bin = Buffer.from(b64, "base64");
-  return new Uint8Array(bin);
+  const bin = atob(b64);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
 }
 
 const BECH32_ALPHABET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
