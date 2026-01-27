@@ -23,6 +23,9 @@ export default function BrandLogo({
       <img
         src="/brand/icon.png"
         alt="Burrito"
+        loading="lazy"
+        fetchPriority="low"
+        decoding="async"
         style={{
           height: iconSize,
           width: "auto",
