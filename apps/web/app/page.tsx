@@ -67,7 +67,7 @@ export default function Page() {
           Burrito is a platform built on Terra Classic, designed for data exploration, asset management, and blockchain interaction.
         </p>
 
-          <div className="heroCta"><LaunchButton href="/coming-soon" size="large"/> </div></div>
+          <div className="heroCta"><LaunchButton href="https://app.burrito.money" size="large"/> </div></div>
       </div>
 
       {/* RIGHT */}
@@ -375,12 +375,12 @@ export default function Page() {
                   flexWrap: "wrap",
                 }}
               >
-                <LaunchButton href="/coming-soon">
+                <LaunchButton href="https://app.burrito.money/stake">
                   Delegate
                 </LaunchButton>
 
                 {/* Open App: reuse LaunchButton styling (same as Header/Hero) */}
-                <LaunchButton href="/coming-soon">Open App</LaunchButton>
+                <LaunchButton href="https://app.burrito.money">Open App</LaunchButton>
               </div>
             </div>
           </div>

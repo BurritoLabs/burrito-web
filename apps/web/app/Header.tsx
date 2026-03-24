@@ -89,7 +89,7 @@ export default function Header() {
 
               {/* 右侧留白 8（和 logo 对称） */}
               <div style={{ display: "flex", alignItems: "center", marginRight: 8 }}>
-                <LaunchButton href="/coming-soon" />
+                <LaunchButton href="https://app.burrito.money" />
               </div>
             </div>
           </div>
