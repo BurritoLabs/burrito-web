@@ -1,445 +1,289 @@
-﻿import Header from "./Header";
+import Image from "next/image";
+import Header from "./Header";
 import BrandLogo from "../components/brand/BrandLogo";
-import TopDownBlockLift from "../components/widgets/TopDownBlockLift";
 import LaunchButton from "../components/buttons/LaunchButton";
-import NodeStats from "../components/widgets/NodeStats";
-const fontDisplay =
-  "var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif";
+import DualChainStatus from "../components/widgets/DualChainStatus";
 
-const C = {
-  white: "#FFFFFF",
-  fg72: "rgba(234,245,235,0.72)",
-  fg78: "rgba(234,245,235,0.78)",
-  fg80: "rgba(234,245,235,0.80)",
-  green90: "rgba(82,196,26,0.9)",
-};
+const products = [
+  {
+    name: "Burrito App",
+    label: "Trade and operate",
+    description:
+      "Wallet, aggregated swaps, markets, launchpad, staking, governance and contracts across both Terra networks.",
+    href: "https://app.burrito.money",
+    image: "/products/app.png",
+    imageAlt: "Burrito App dashboard on Terra Classic",
+    network: "LUNA + LUNC",
+    accent: "productGreen",
+    action: "Launch App",
+  },
+  {
+    name: "Burrito AI",
+    label: "Create with a wallet",
+    description:
+      "Generate video, images and voice with wallet-native access. Pay with LUNC, USTC or LUNA.",
+    href: "https://ai.burrito.money",
+    image: "/products/ai.png",
+    imageAlt: "Burrito AI generation studio",
+    network: "LUNA + LUNC",
+    accent: "productCyan",
+    action: "Open AI",
+  },
+  {
+    name: "Burrito Monitor",
+    label: "See network health",
+    description:
+      "Track validators, blocks, governance, delegators and chain health with visible source evidence.",
+    href: "https://monitor.burrito.money",
+    image: "/products/monitor.png",
+    imageAlt: "Burrito Monitor LUNA network dashboard",
+    network: "LUNA + LUNC",
+    accent: "productOrange",
+    action: "Open Monitor",
+  },
+  {
+    name: "Burrito Finder",
+    label: "Verify on-chain",
+    description:
+      "Search blocks, transactions, accounts, contracts and validators on Classic and Phoenix.",
+    href: "https://finder.burrito.money",
+    image: "/products/finder.png",
+    imageAlt: "Burrito Finder on the Phoenix network",
+    network: "PHOENIX + CLASSIC",
+    accent: "productBlue",
+    action: "Open Finder",
+  },
+] as const;
+
+const networks = [
+  {
+    name: "Terra",
+    symbol: "LUNA",
+    chainId: "phoenix-1",
+    description:
+      "Full Burrito product coverage with native LUNA markets, swaps, launchpad, monitoring, exploration and validator operations.",
+    className: "networkLuna",
+    href: "https://monitor.burrito.money/luna",
+  },
+  {
+    name: "Terra Classic",
+    symbol: "LUNC",
+    chainId: "columbus-5",
+    description:
+      "Deep Classic coverage across LUNC and USTC markets, swaps, launchpad, monitoring, exploration and validator operations.",
+    className: "networkLunc",
+    href: "https://monitor.burrito.money/lunc",
+  },
+] as const;
+
+const validators = [
+  {
+    network: "Terra",
+    symbol: "LUNA",
+    chainId: "phoenix-1",
+    href: "https://monitor.burrito.money/luna/burrito-node",
+    className: "validatorLuna",
+  },
+  {
+    network: "Terra Classic",
+    symbol: "LUNC",
+    chainId: "columbus-5",
+    href: "https://monitor.burrito.money/lunc/burrito-node",
+    className: "validatorLunc",
+  },
+] as const;
 
 export default function Page() {
   return (
-    <main className="pageAtmosphere">
+    <main className="siteShell">
       <Header />
-      <div data-header-spacer="1" style={{ height: 56 }} aria-hidden="true" />
 
-                        {/* HERO */}
-<section className="hero">
-
-  <div className="wrap1400 heroWrap">
-
-    <div className="heroGrid">
-
-      {/* LEFT */}
-      <div className="heroLeft">
-      <div style={{ minWidth: 0, maxWidth: 700 }}>
-        <h1
-  style={{
-    margin: "0 0 14px",
-    
-    fontWeight: 900,
-    letterSpacing: "-0.045em",
-    
-    color: "#FFFFFF",
-    
-
-
-
-    fontFamily:
-      "var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif",
-  }}
->
-  <span style={{ display: "block" }}>The Gateway</span>
-  <span style={{ display: "block" }}>
-    to <span style={{ whiteSpace: "nowrap" }}>Terra Classic</span>
-  
-  
-</span>
-
-</h1>
-
-
-        <p
-          style={{
-            margin: "0 0 20px",
-            
-            color: "rgba(234,245,235,0.72)",
-            maxWidth: 520,
-          }}
-        >
-          Burrito is a platform built on Terra Classic, designed for data exploration, asset management, and blockchain interaction.
-        </p>
-
-          <div className="heroCta"><LaunchButton href="https://app.burrito.money" size="large"/> </div></div>
-      </div>
-
-      {/* RIGHT */}
-      <div style={{ justifySelf: "center" }}>
-  <TopDownBlockLift />
-</div>
-    </div>
-  </div>
-</section>
-
-
-      {/* Ecosystem */}
-      <section id="ecosystem" style={{ padding: "92px 0 76px" }}>
-        <div className="wrap1400">
-          
-            <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-              <div>
-                <div
-                  style={{
-                    fontSize: 14,
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: C.green90,
-                  }}
-                >
-                  Ecosystem
-                </div>
-
-                <h2
-                  style={{
-                    margin: "10px 0 8px",
-                    fontSize: "clamp(26px, 2.4vw, 36px)",
-                    fontWeight: 900,
-                    letterSpacing: "-0.03em",
-                    lineHeight: 1.15,
-                    color: C.white,
-                    fontFamily: fontDisplay,
-                  }}
-                >
-                  One place to explore, build, and operate
-                </h2>
-
-                <p
-                  style={{
-                    margin: 0,
-                    maxWidth: 860,
-                    fontSize: 16,
-                    lineHeight: 1.7,
-                    color: C.fg78,
-                  }}
-                >
-                  Burrito brings together essential entry points for Terra
-                  Classic—wallet access, on-chain data, tools, and
-                  infrastructure—designed to feel simple, fast, and cohesive.
-                </p>
-              </div>
-
-              <div className="ecoGrid">
-                {[
-                  {
-                    title: "Explore",
-                    desc: "Browse tokens, pools, and on-chain activity with a clean, unified interface.",
-                    tag: "Discover",
-                    meta: "Tokens · Pools · Activity",
-                  },
-                  {
-                    title: "Build",
-                    desc: "Launch and manage contracts and tools with a developer-friendly flow.",
-                    tag: "Create",
-                    meta: "Contracts · Tools · Templates",
-                  },
-                  {
-                    title: "Operate",
-                    desc: "Run infra and monitor your position—validator, wallet, and protocol operations.",
-                    tag: "Run",
-                    meta: "Validator · Monitoring · Ops",
-                  },
-                ].map((x) => (
-                  <div
-                    key={x.title}
-                    className="menuCard"
-                    style={{
-                      padding: 18,
-                      minHeight: 168,
-                      boxShadow: "0 18px 60px rgba(0,0,0,0.22)",
-                    }}
-                  >
-                    <div className="tagPill">{x.tag}</div>
-
-                    <div
-                      style={{
-                        marginTop: 12,
-                        fontSize: 18,
-                        fontWeight: 900,
-                        letterSpacing: "-0.02em",
-                        color: C.white,
-                        fontFamily: fontDisplay,
-                      }}
-                    >
-                      {x.title}
-                    </div>
-
-                    <div className="cardMeta">{x.meta}</div>
-
-                    <p
-                      style={{
-                        margin: "10px 0 0",
-                        color: C.fg78,
-                        lineHeight: 1.6,
-                      }}
-                    >
-                      {x.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
+      <section className="hero" id="top">
+        <div className="wrap heroGrid">
+          <div className="heroCopy">
+            <div className="sectionKicker">Two networks. One ecosystem.</div>
+            <h1>Burrito for Terra and Terra Classic</h1>
+            <p className="heroLead">
+              Apps, AI, monitoring, exploration and validator infrastructure
+              built for LUNA and LUNC.
+            </p>
+            <div className="heroActions">
+              <LaunchButton href="https://app.burrito.money" size="large" />
+              <a className="secondaryButton" href="#products">
+                Explore the ecosystem
+              </a>
+            </div>
+            <div className="heroProof" aria-label="Burrito ecosystem coverage">
+              <span>4 live products</span>
+              <span>2 active validators</span>
+              <span>2 supported networks</span>
             </div>
           </div>
-        
-      </section>
 
-      {/* Value */}
-      <section className="valueSection">
-        <div className="wrap1400">
-          <div className="valueGrid">
-            <div className="valueIntro">
-              <div className="sectionKicker">Why Burrito</div>
-
-              <h2 className="valueTitle">
-                Your cleanest path into Terra Classic
-              </h2>
-
-              <p className="valueLead">
-                Explore, build, and operate without the noise. Burrito keeps
-                the signal and removes the clutter so you can move with clarity
-                and confidence.
-              </p>
-
-              <div className="valueSignal">
-                Built for confident decisions and faster execution.
-              </div>
-            </div>
-
-            <div className="valueCardStack">
-              {[
-                {
-                  title: "Everything in one place",
-                  desc: "Tokens, pools, contracts, and validator operations are organized into a single, readable surface.",
-                },
-                {
-                  title: "Clarity over chaos",
-                  desc: "Signal-first layouts and clear hierarchy help you scan faster and focus on what matters.",
-                },
-                {
-                  title: "Smooth by design",
-                  desc: "Consistent flows and familiar patterns turn complex on-chain actions into simple steps.",
-                },
-              ].map((x) => (
-                <div key={x.title} className="menuCard valueCard">
-                  <div className="valueCardTitle">{x.title}</div>
-                  <p className="valueCardDesc">{x.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <DualChainStatus />
         </div>
       </section>
 
-      {/* Terra Classic features */}
-      <section className="featuresSection">
-        <div className="wrap1400">
-          <div className="featuresBoard">
-            <div className="featuresHeader">
-              <div className="sectionKicker">Terra Classic</div>
-              <h3 className="featuresTitle">
-                Governance-led blockchain with a burn mechanism
-              </h3>
-              <p className="featuresLead">
-                Focused on low fees, fast confirmation, and community-driven
-                progress, Terra Classic continues to evolve with strong
-                validator infrastructure and broad ecosystem access.
-              </p>
-            </div>
-
-            <div className="featuresGrid">
-              {[
-                {
-                  title: "Low fees and fast confirmation",
-                  desc: "Fast finality and low transaction costs keep everyday actions affordable and responsive, enabling frequent on-chain activity without friction.",
-                },
-                {
-                  title: "Cosmos interoperability",
-                  desc: "IBC connectivity unlocks cross-chain liquidity, shared markets, and composable workflows across the Cosmos ecosystem.",
-                },
-                {
-                  title: "Community-led governance",
-                  desc: "On-chain proposals and voting give the community direct control over upgrades, parameters, and long-term priorities.",
-                },
-                {
-                  title: "Validator-backed security",
-                  desc: "A distributed validator set maintains consensus, preserves network safety, and keeps the chain resilient under load.",
-                },
-                {
-                  title: "Supply reduction potential",
-                  desc: "Burn mechanisms and policy decisions can reduce circulating supply over time, supporting long-term economic objectives.",
-                },
-                {
-                  title: "Builder-friendly environment",
-                  desc: "Familiar tooling, low overhead, and open access reduce the cost of experimentation and speed up product iteration.",
-                },
-              ].map((x) => (
-                <div key={x.title} className="menuCard featuresCard">
-                  <div className="featuresCardTitle">{x.title}</div>
-                  <p className="featuresCardDesc">{x.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Burrito Node */}
-      <section style={{ padding: "70px 0 64px" }}>
-        <div className="wrap1400">
-          <div className="nodeGrid">
+      <section className="productsSection" id="products">
+        <div className="wrap">
+          <div className="sectionHeader sectionHeaderWide">
             <div>
-              <div className="sectionKicker">Burrito Node</div>
-              <h3 className="nodeTitle">Validator-grade infrastructure</h3>
-              <p className="nodeLead">
-                Transparent metrics and long-term reliability for the Terra
-                Classic community.
-              </p>
-              <div className="nodeMeta">Live stats sourced on-chain.</div>
+              <div className="sectionKicker">Burrito ecosystem</div>
+              <h2>Built products, not promises</h2>
             </div>
+            <p>
+              One connected product family for using, creating on, monitoring
+              and verifying activity across Terra and Terra Classic.
+            </p>
+          </div>
 
-            <div className="nodeStats">
-              <NodeStats valoper="terravaloper16x9dcx9pm9j8ykl0td4hptwule706ysjel6500" />
-            </div>
+          <div className="productGrid">
+            {products.map((product) => (
+              <a
+                className={`productCard ${product.accent}`}
+                href={product.href}
+                key={product.name}
+              >
+                <div className="productMedia">
+                  <Image
+                    src={product.image}
+                    alt={product.imageAlt}
+                    width={1440}
+                    height={900}
+                    sizes="(max-width: 767px) 100vw, 50vw"
+                  />
+                </div>
+                <div className="productBody">
+                  <div className="productTopline">
+                    <span>{product.label}</span>
+                    <span className="networkTag">{product.network}</span>
+                  </div>
+                  <h3>{product.name}</h3>
+                  <p>{product.description}</p>
+                  <span className="productAction">{product.action}</span>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Support */}
-      <section style={{ padding: "64px 0" }}>
-        <div className="wrap1400">
-          
-            <div
-              className="menuCard"
-              style={{
-                borderRadius: 22,
-                background:
-                  "linear-gradient(135deg, rgba(82,196,26,0.10), rgba(70,130,255,0.08))",
-                border: "1px solid rgba(234,245,235,0.12)",
-                padding: 22,
-                boxShadow: "0 22px 70px rgba(0,0,0,0.28)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 18,
-                flexWrap: "wrap",
-              }}
-            >
-              <div style={{ maxWidth: 900 }}>
-                <div
-                  style={{
-                    fontSize: 14,
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: C.green90,
-                  }}
-                >
-                  Support
-                </div>
-
-                <h3
-                  style={{
-                    margin: "10px 0 8px",
-                    fontSize: "clamp(22px, 2vw, 30px)",
-                    fontWeight: 900,
-                    letterSpacing: "-0.03em",
-                    lineHeight: 1.2,
-                    color: C.white,
-                    fontFamily: fontDisplay,
-                  }}
-                >
-                  Support Burrito by delegating to Burrito Node
-                </h3>
-
-                <p style={{ margin: 0, color: C.fg80, lineHeight: 1.75 }}>
-                  Burrito Node runs validator-grade infrastructure and supports
-                  long-term tools built by Burrito Labs. Delegation helps sustain
-                  operations, monitoring, and development—while you keep full
-                  custody.
-                </p>
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  flexWrap: "wrap",
-                }}
-              >
-                <LaunchButton href="https://app.burrito.money/stake">
-                  Delegate
-                </LaunchButton>
-
-                {/* Open App: reuse LaunchButton styling (same as Header/Hero) */}
-                <LaunchButton href="https://app.burrito.money">Open App</LaunchButton>
-              </div>
-            </div>
+      <section className="networksSection" id="networks">
+        <div className="wrap">
+          <div className="sectionHeader">
+            <div className="sectionKicker">Supported networks</div>
+            <h2>Native on both sides of Terra</h2>
+            <p>
+              Burrito treats Terra and Terra Classic as first-class networks,
+              with dedicated data, routes and validator infrastructure for each.
+            </p>
           </div>
-        
+
+          <div className="networkGrid">
+            {networks.map((network) => (
+              <a
+                className={`networkCard ${network.className}`}
+                href={network.href}
+                key={network.symbol}
+              >
+                <div className="networkIdentity">
+                  <span className="networkMark" aria-hidden="true" />
+                  <div>
+                    <span className="networkSymbol">{network.symbol}</span>
+                    <h3>{network.name}</h3>
+                  </div>
+                </div>
+                <span className="chainId">{network.chainId}</span>
+                <p>{network.description}</p>
+                <span className="textLink">View live network</span>
+              </a>
+            ))}
+          </div>
+        </div>
       </section>
 
-      {/* Footer */}
-      <footer
-        style={{
-          padding: "28px 0",
-          borderTop: "1px solid rgba(234,245,235,0.12)",
-          marginTop: 0,
-          background: "rgba(12, 20, 17, 0.35)",
-          backdropFilter: "blur(6px)",
-        }}
-      >
-        <div className="footer1400">
-          <div >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 16,
-                flexWrap: "wrap",
-              }}
-            >
-              <BrandLogo />
+      <section className="validatorsSection" id="validators">
+        <div className="wrap validatorLayout">
+          <div className="validatorIntro">
+            <div className="sectionKicker">Burrito Node</div>
+            <h2>Validator infrastructure on LUNA and LUNC</h2>
+            <p>
+              Burrito operates active validators on both networks. Monitor live
+              signing, voting power, governance and delegator evidence in
+              Burrito Monitor.
+            </p>
+            <a className="secondaryButton" href="https://app.burrito.money/stake">
+              Delegate in Burrito App
+            </a>
+          </div>
 
-              <div style={{ opacity: 0.72, fontSize: 13 }}>
-                ©2026 Burrito Labs. All rights reserved.
-              </div>
-
-              <div
-                style={{ display: "flex", gap: 14, opacity: 0.75, fontSize: 14 }}
+          <div className="validatorList">
+            {validators.map((validator) => (
+              <a
+                className={`validatorRow ${validator.className}`}
+                href={validator.href}
+                key={validator.symbol}
               >
-                <a
-                  href="https://github.com/BurritoLabs"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="footerLink"
-                >
-                  GitHub
-                </a>
-                <a
-                  href="https://x.com/burrito__money"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="footerLink"
-                >
-                  X
-                </a>
-              </div>
-            </div>
+                <div>
+                  <span className="liveLabel">
+                    <span className="liveDot" aria-hidden="true" />
+                    Active validator
+                  </span>
+                  <h3>Burrito Node</h3>
+                  <p>{validator.network}</p>
+                </div>
+                <div className="validatorMeta">
+                  <strong>{validator.symbol}</strong>
+                  <span>{validator.chainId}</span>
+                  <span className="textLink">Open node profile</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="closingSection">
+        <div className="wrap closingInner">
+          <div>
+            <div className="sectionKicker">Burrito Labs</div>
+            <h2>One identity across the Terra ecosystem</h2>
+            <p>
+              Move from discovery to action without leaving the Burrito product
+              family.
+            </p>
+          </div>
+          <div className="closingActions">
+            <LaunchButton href="https://app.burrito.money" size="large">
+              Launch App
+            </LaunchButton>
+            <a className="secondaryButton" href="https://monitor.burrito.money">
+              Open Monitor
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer className="siteFooter">
+        <div className="wrap footerInner">
+          <BrandLogo />
+          <div className="footerProducts" aria-label="Burrito products">
+            <a href="https://app.burrito.money">App</a>
+            <a href="https://ai.burrito.money">AI</a>
+            <a href="https://monitor.burrito.money">Monitor</a>
+            <a href="https://finder.burrito.money">Finder</a>
+          </div>
+          <div className="footerLegal">©2026 Burrito Labs</div>
+          <div className="footerSocial">
+            <a href="https://github.com/BurritoLabs" target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+            <a href="https://x.com/burrito__money" target="_blank" rel="noreferrer">
+              X
+            </a>
           </div>
         </div>
       </footer>
-
-      <div className="footerEnd" />
     </main>
   );
 }
