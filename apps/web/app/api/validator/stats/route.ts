@@ -24,14 +24,6 @@ type DelegationResponse = {
   balance?: { amount?: string };
 };
 
-type DelegationPage = {
-  delegation_responses?: DelegationResponse[];
-  pagination?: { next_key?: string | null };
-};
-
-type ValidatorPayload = TerraValidator & { validator?: TerraValidator };
-type PoolPayload = { pool?: { bonded_tokens?: string } };
-
 type Cached = { ts: number; data: Ok };
 const CACHE_TTL_MS = 5 * 60 * 1000;
 const statsCache = new Map<string, Cached>();
@@ -47,7 +39,7 @@ async function fetchDelegatorCount(LCD: string, valoper: string) {
     const url = `${LCD}/cosmos/staking/v1beta1/validators/${valoper}/delegations?pagination.limit=200${keyQ}`;
     const r = await fetch(url, { cache: "no-store" });
     if (!r.ok) break;
-    const j = (await r.json()) as DelegationPage;
+    const j: any = await r.json();
 
     const list = (j?.delegation_responses ?? []) as DelegationResponse[];
     for (const item of list) {
@@ -101,8 +93,8 @@ export async function GET(req: Request) {
         { status: 502 }
       );
     }
-    const vj = (await vRes.json()) as ValidatorPayload;
-    const validator = vj.validator ?? vj;
+    const vj: any = await vRes.json();
+    const validator = (vj?.validator ?? vj) as TerraValidator;
 
     const poolRes = await fetch(`${LCD}/cosmos/staking/v1beta1/pool`, {
       cache: "no-store",
@@ -116,7 +108,7 @@ export async function GET(req: Request) {
 
     let bondedTokens = 0;
     if (poolRes.ok) {
-      const pj = (await poolRes.json()) as PoolPayload;
+      const pj: any = await poolRes.json();
       bondedTokens = Number(pj?.pool?.bonded_tokens ?? 0);
     }
 
@@ -149,10 +141,9 @@ export async function GET(req: Request) {
 
     statsCache.set(valoper, { ts: now, data });
     return NextResponse.json(data);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "unknown error";
+  } catch (e: any) {
     return NextResponse.json(
-      { ok: false, error: message } satisfies Bad,
+      { ok: false, error: e?.message || "unknown error" } satisfies Bad,
       { status: 500 }
     );
   }

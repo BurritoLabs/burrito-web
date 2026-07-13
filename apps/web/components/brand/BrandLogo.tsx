@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import React from "react";
 
 export default function BrandLogo({
   textSize = 20,
@@ -16,15 +16,16 @@ export default function BrandLogo({
         display: "inline-flex",
         alignItems: "center",
         gap,
-        paddingLeft: gap,
+        paddingLeft: gap, // ✅ 左侧留白 = icon↔text 间距（Phoenix 风格）
         lineHeight: 1,
       }}
     >
-      <Image
+      <img
         src="/brand/icon.png"
         alt="Burrito"
-        width={iconSize}
-        height={iconSize}
+        loading="lazy"
+        fetchPriority="low"
+        decoding="async"
         style={{
           height: iconSize,
           width: "auto",
@@ -36,7 +37,7 @@ export default function BrandLogo({
         style={{
           fontSize: textSize,
           fontWeight: 650,
-          letterSpacing: "0",
+          letterSpacing: "-0.05em",
           color: "#FFFFFF",
           lineHeight: "1em",
           display: "block",
