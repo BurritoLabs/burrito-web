@@ -1,3 +1,7 @@
 .playwright-cli/
 apps/web/dev-*.log
 apps/web/output/
+apps/web/.dev.vars*
+apps/web/.open-next/
+apps/web/.wrangler/
+apps/web/cloudflare-env.d.ts

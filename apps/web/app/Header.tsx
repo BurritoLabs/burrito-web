@@ -25,6 +25,7 @@ export default function Header() {
   const ticking = useRef(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const headerVisible = show || menuOpen;
 
   useEffect(() => {
     lastY.current = window.scrollY || 0;
@@ -63,7 +64,6 @@ export default function Header() {
     const menuButton = menuButtonRef.current;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    setShow(true);
     closeButtonRef.current?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -90,8 +90,8 @@ export default function Header() {
           height: H,
           zIndex: 9999,
 
-          transform: show ? "translateY(0)" : "translateY(-100%)",
-          opacity: show ? 1 : 0,
+          transform: headerVisible ? "translateY(0)" : "translateY(-100%)",
+          opacity: headerVisible ? 1 : 0,
           transition:
             "transform 300ms ease, opacity 300ms ease, background-color 300ms ease, box-shadow 300ms ease",
 
