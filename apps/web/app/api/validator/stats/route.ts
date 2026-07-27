@@ -28,6 +28,24 @@ type Cached = { ts: number; data: Ok };
 const CACHE_TTL_MS = 5 * 60 * 1000;
 const statsCache = new Map<string, Cached>();
 
+type Network = "classic" | "phoenix";
+
+function getLcd(network: Network) {
+  if (network === "phoenix") {
+    return (
+      process.env.TERRA_PHOENIX_LCD ||
+      process.env.TERRA_MAINNET_LCD ||
+      "https://terra-lcd.publicnode.com"
+    );
+  }
+
+  return (
+    process.env.TERRA_CLASSIC_LCD ||
+    process.env.TERRA_LCD ||
+    "https://terra-classic-lcd.publicnode.com"
+  );
+}
+
 async function fetchDelegatorCount(LCD: string, valoper: string) {
   const totals = new Map<string, number>();
   const minAmount = 1; // 0.000001 LUNC (1 uluna)
@@ -67,6 +85,15 @@ export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
     const valoper = url.searchParams.get("valoper");
+    const requestedNetwork = url.searchParams.get("network") ?? "classic";
+    if (requestedNetwork !== "classic" && requestedNetwork !== "phoenix") {
+      return NextResponse.json(
+        { ok: false, error: "invalid network" } satisfies Bad,
+        { status: 400 }
+      );
+    }
+    const network = requestedNetwork as Network;
+
     if (!valoper) {
       return NextResponse.json(
         { ok: false, error: "missing valoper" } satisfies Bad,
@@ -74,14 +101,14 @@ export async function GET(req: Request) {
       );
     }
 
-    const cached = statsCache.get(valoper);
+    const cacheKey = `${network}:${valoper}`;
+    const cached = statsCache.get(cacheKey);
     const now = Date.now();
     if (cached && now - cached.ts < CACHE_TTL_MS) {
       return NextResponse.json(cached.data);
     }
 
-    const LCD =
-      process.env.TERRA_LCD || "https://terra-classic-lcd.publicnode.com";
+    const LCD = getLcd(network);
 
     const vRes = await fetch(
       `${LCD}/cosmos/staking/v1beta1/validators/${valoper}`,
@@ -139,7 +166,7 @@ export async function GET(req: Request) {
       delegators,
     };
 
-    statsCache.set(valoper, { ts: now, data });
+    statsCache.set(cacheKey, { ts: now, data });
     return NextResponse.json(data);
   } catch (e: any) {
     return NextResponse.json(

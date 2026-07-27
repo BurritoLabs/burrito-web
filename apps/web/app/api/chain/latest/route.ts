@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 export const runtime = "edge";
 
-type LatestOk = { ok: true; height: number; hash: string };
+type LatestOk = { ok: true; chain_id: string; height: number; hash: string };
 
 type BlockOk = {
   ok: true;
@@ -209,23 +209,57 @@ async function fetchBlockFromFCD(FCD: string, h: number): Promise<BlockOk | null
   };
 }
 
-async function fetchLatestFromFCD(FCD: string): Promise<LatestOk | null> {
+async function fetchLatestFromFCD(FCD: string, chainId: string): Promise<LatestOk | null> {
   const r = await fetch(`${FCD}/v1/blocks/latest`, { cache: "no-store" });
   if (!r.ok) return null;
   const j: any = await r.json();
   const height = Number(j?.height ?? j?.block?.height ?? 0);
   const hash = String(j?.hash ?? j?.block_id?.hash ?? j?.block?.hash ?? "");
   if (!height) return null;
-  return { ok: true, height, hash };
+  return { ok: true, chain_id: chainId, height, hash };
+}
+
+async function fetchLatestFromLCD(LCD: string, chainId: string): Promise<LatestOk | null> {
+  const paths = [
+    "/cosmos/base/tendermint/v1beta1/blocks/latest",
+    "/blocks/latest",
+  ];
+
+  for (const path of paths) {
+    try {
+      const r = await fetch(`${LCD}${path}`, { cache: "no-store" });
+      if (!r.ok) continue;
+
+      const j: any = await r.json();
+      const height = Number(j?.block?.header?.height ?? 0);
+      if (!height) continue;
+
+      return {
+        ok: true,
+        chain_id: String(j?.block?.header?.chain_id ?? chainId),
+        height,
+        hash: String(j?.block_id?.hash ?? ""),
+      };
+    } catch {}
+  }
+
+  return null;
 }
 
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
     const heightQ = url.searchParams.get("height");
+    const network = (url.searchParams.get("network") ?? "classic").toLowerCase();
+    const isPhoenix = network === "phoenix" || network === "mainnet" || network === "luna";
+    const chainId = isPhoenix ? "phoenix-1" : "columbus-5";
 
-    const LCD = process.env.TERRA_LCD || "https://terra-classic-lcd.publicnode.com";
-    const FCD = process.env.TERRA_FCD || "https://terra-classic-fcd.publicnode.com";
+    const LCD = isPhoenix
+      ? process.env.LUNA_LCD_URL || process.env.PHOENIX_LCD || "https://terra-lcd.publicnode.com"
+      : process.env.TERRA_LCD || process.env.LUNC_LCD_URL || "https://terra-classic-lcd.publicnode.com";
+    const FCD = isPhoenix
+      ? process.env.LUNA_FCD_URL || process.env.PHOENIX_FCD || "https://phoenix-fcd.terra.dev"
+      : process.env.TERRA_FCD || process.env.LUNC_FCD_URL || "https://terra-classic-fcd.publicnode.com";
 
     // Block mode
     if (heightQ) {
@@ -234,36 +268,31 @@ export async function GET(req: Request) {
         return NextResponse.json({ ok: false, error: "invalid height" } satisfies Bad, { status: 400 });
       }
 
-      // 1) FCD first (fast)
-      try {
-        const fcd = await fetchBlockFromFCD(FCD, h);
-        if (fcd) return NextResponse.json(fcd);
-      } catch {}
+      if (!isPhoenix) {
+        try {
+          const fcd = await fetchBlockFromFCD(FCD, h);
+          if (fcd) return NextResponse.json(fcd);
+        } catch {}
+      }
 
-      // 2) fallback LCD
       const lcd = await fetchBlockFromLCD(LCD, h);
       if (!lcd.ok) return NextResponse.json(lcd satisfies Bad, { status: 502 });
       return NextResponse.json(lcd);
     }
 
-    // Latest (Dial): FCD first
-    try {
-      const f = await fetchLatestFromFCD(FCD);
-      if (f) return NextResponse.json(f);
-    } catch {}
-
-    // fallback LCD latest
-    const rr = await fetch(`${LCD}/blocks/latest`, { cache: "no-store" });
-    if (!rr.ok) {
-      return NextResponse.json({ ok: false, error: `lcd http ${rr.status}` } satisfies Bad, { status: 502 });
+    // Phoenix must come from LCD; its legacy FCD can be behind the live chain.
+    if (!isPhoenix) {
+      try {
+        const f = await fetchLatestFromFCD(FCD, chainId);
+        if (f) return NextResponse.json(f);
+      } catch {}
     }
 
-    const jj: any = await rr.json();
-    const height = Number(jj?.block?.header?.height ?? 0);
-    const hash = jj?.block_id?.hash ?? "";
-
-    const out: LatestOk = { ok: true, height, hash };
-    return NextResponse.json(out);
+    const latest = await fetchLatestFromLCD(LCD, chainId);
+    if (!latest) {
+      return NextResponse.json({ ok: false, error: "unable to fetch latest block" } satisfies Bad, { status: 502 });
+    }
+    return NextResponse.json(latest);
   } catch (e: any) {
     return NextResponse.json({ ok: false, error: e?.message || "unknown error" } satisfies Bad, { status: 500 });
   }

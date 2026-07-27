@@ -1,17 +1,30 @@
 ﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import BrandLogo from "../components/brand/BrandLogo";
 import LaunchButton from "../components/buttons/LaunchButton";
 
-const H = 56;
+const H = 57;
+const NAV_ITEMS = [
+  { label: "Home", href: "/" },
+  { label: "Ecosystem", href: "/ecosystem" },
+  { label: "Networks", href: "/networks" },
+  { label: "Validators", href: "/validators" },
+  { label: "About", href: "/about" },
+];
 
 export default function Header() {
+  const pathname = usePathname();
   const [show, setShow] = useState(true);
   const [atTop, setAtTop] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const lastY = useRef(0);
   const ticking = useRef(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     lastY.current = window.scrollY || 0;
@@ -44,6 +57,27 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const menuButton = menuButtonRef.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    setShow(true);
+    closeButtonRef.current?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+      menuButton?.focus();
+    };
+  }, [menuOpen]);
+
   return (
     <>
       <header
@@ -56,10 +90,12 @@ export default function Header() {
           height: H,
           zIndex: 9999,
 
-          transform: show ? "translateY(0)" : `translateY(-${H + 2}px)`,
-          transition: "transform 220ms ease, background-color 220ms ease, box-shadow 260ms ease",
+          transform: show ? "translateY(0)" : "translateY(-100%)",
+          opacity: show ? 1 : 0,
+          transition:
+            "transform 300ms ease, opacity 300ms ease, background-color 300ms ease, box-shadow 300ms ease",
 
-          backgroundColor: atTop ? "transparent" : "var(--bg)",
+          backgroundColor: atTop ? "transparent" : "rgba(12,20,17,0.70)",
 
           // ✅ 细线：不用子元素，直接 inset shadow，稳
           boxShadow: atTop ? "none" : "inset 0 -1px 0 rgba(234,245,235,0.12)",
@@ -76,29 +112,111 @@ export default function Header() {
         {/* 内容层：zIndex 2，确保按钮永远在最上面 */}
         <div style={{ position: "relative", zIndex: 2, height: "100%" }}>
           <div className="header1400" style={{ height: "100%" }}>
-            <div
-              style={{
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 12,
-              }}
-            >
-              <BrandLogo />
+            <div className="headerBar">
+              <Link className="headerBrandLink" href="/" aria-label="Burrito home">
+                <BrandLogo />
+              </Link>
+
+              <nav className="siteNav" aria-label="Primary navigation">
+                {NAV_ITEMS.map((item) => {
+                  const active =
+                    item.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(item.href);
+
+                  return (
+                    <Link
+                      key={item.label}
+                      className="siteNavLink"
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </nav>
 
               {/* 右侧留白 8（和 logo 对称） */}
-              <div style={{ display: "flex", alignItems: "center", marginRight: 8 }}>
-                <LaunchButton href="https://app.burrito.money" />
+              <div className="headerActions">
+                <LaunchButton
+                  href="https://app.burrito.money"
+                  className="btnPrimary hdrCta headerLaunchCta"
+                  style={{ height: 40 }}
+                />
+                <button
+                  ref={menuButtonRef}
+                  type="button"
+                  className="navMenuButton"
+                  aria-label="Open navigation"
+                  aria-expanded={menuOpen}
+                  aria-controls="mobile-navigation"
+                  onClick={() => setMenuOpen(true)}
+                >
+                  <span />
+                  <span />
+                  <span />
+                </button>
               </div>
             </div>
           </div>
         </div>
-
-        
       </header>
 
-      
+      {menuOpen && (
+        <div className="mobileNavLayer">
+          <button
+            type="button"
+            className="mobileNavBackdrop"
+            aria-label="Close navigation overlay"
+            onClick={() => setMenuOpen(false)}
+          />
+
+          <aside
+            id="mobile-navigation"
+            className="mobileNavPanel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="mobile-navigation-title"
+          >
+            <h2 id="mobile-navigation-title" className="mobileNavTitle">
+              Burrito
+            </h2>
+
+            <button
+              ref={closeButtonRef}
+              type="button"
+              className="mobileNavClose"
+              aria-label="Close navigation"
+              onClick={() => setMenuOpen(false)}
+            >
+              <span />
+              <span />
+            </button>
+
+            <nav className="mobileNavLinks" aria-label="Mobile navigation">
+              {NAV_ITEMS.map((item) => {
+                const active =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.href);
+
+                return (
+                  <Link
+                    key={item.label}
+                    className="mobileNavLink"
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+          </aside>
+        </div>
+      )}
     </>
   );
 }

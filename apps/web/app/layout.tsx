@@ -1,9 +1,9 @@
 ﻿import {Montserrat, Inter} from "next/font/google";
 import { Nunito_Sans } from "next/font/google";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import BackToTop from "../components/navigation/BackToTop";
+import { createPageMetadata } from "./metadata";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,19 +19,18 @@ const nunito = Nunito_Sans({
   variable: "--font-nunito",
   weight: ["400", "500", "600", "700"],
 });
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 export const metadata: Metadata = {
-  title: "Burrito",
-  description: "The Gateway to Terra Classic",
+  metadataBase: new URL("https://burrito.money"),
+  applicationName: "Burrito",
+  ...createPageMetadata({
+    title: "Burrito | Terra & Terra Classic",
+    description:
+      "Explore products and validator infrastructure for Terra and Terra Classic.",
+    path: "/",
+  }),
   icons: {
     icon: "/burrito-favicon.png",
+    apple: "/apple-touch-icon.png",
   },
 };
 export default function RootLayout({
@@ -40,12 +39,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${nunito.variable} ${inter.variable}`}>
-  <body className={`${montserrat.variable} ${nunito.variable} ${inter.variable}`}>
-    {children}
-    <BackToTop />
-  </body>
-</html>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${montserrat.variable} ${nunito.variable} ${inter.variable}`}
+    >
+      <body className={`${montserrat.variable} ${nunito.variable} ${inter.variable}`}>
+        {children}
+        <BackToTop />
+      </body>
+    </html>
   );
 }
 

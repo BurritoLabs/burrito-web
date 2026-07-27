@@ -1,4 +1,5 @@
 ﻿import React from "react";
+import Image from "next/image";
 
 export default function BrandLogo({
   textSize = 20,
@@ -20,12 +21,11 @@ export default function BrandLogo({
         lineHeight: 1,
       }}
     >
-      <img
+      <Image
         src="/brand/icon.png"
         alt="Burrito"
-        loading="lazy"
-        fetchPriority="low"
-        decoding="async"
+        width={iconSize}
+        height={iconSize}
         style={{
           height: iconSize,
           width: "auto",

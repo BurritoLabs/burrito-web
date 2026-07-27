@@ -19,14 +19,28 @@ const fmtNum = (n: number, max = 2) =>
     maximumFractionDigits: max,
   }).format(n);
 
-const fmtBillions = (n: number) => {
-  const b = n / 1_000_000_000;
-  return `${fmtNum(b, 2)}B`;
+const fmtCompact = (n: number) => {
+  if (n >= 1_000_000_000) return `${fmtNum(n / 1_000_000_000, 2)}B`;
+  if (n >= 1_000_000) return `${fmtNum(n / 1_000_000, 2)}M`;
+  if (n >= 1_000) return `${fmtNum(n / 1_000, 2)}K`;
+  return fmtNum(n, 2);
 };
 
-export default function NodeStats({ valoper }: { valoper: string }) {
+type Props = {
+  valoper: string;
+  network?: "classic" | "phoenix";
+  symbol?: string;
+  className?: string;
+};
+
+export default function NodeStats({
+  valoper,
+  network = "classic",
+  symbol = "LUNC",
+  className = "menuCard nodeCard",
+}: Props) {
   const [stats, setStats] = useState<Stat[]>([
-    { label: "Total Staked", value: "— LUNC" },
+    { label: "Total Staked", value: `— ${symbol}` },
     { label: "Voting Power", value: "—%" },
     { label: "Commission", value: "—%" },
     { label: "Delegators", value: "—" },
@@ -37,7 +51,8 @@ export default function NodeStats({ valoper }: { valoper: string }) {
 
     const run = async () => {
       try {
-        const r = await fetch(`/api/validator/stats?valoper=${valoper}`, {
+        const params = new URLSearchParams({ valoper, network });
+        const r = await fetch(`/api/validator/stats?${params.toString()}`, {
           cache: "no-store",
         });
         const j = (await r.json()) as NodeStatsResp;
@@ -49,8 +64,8 @@ export default function NodeStats({ valoper }: { valoper: string }) {
             label: "Total Staked",
             value:
               typeof j.staked === "number"
-                ? `${fmtBillions(j.staked)} LUNC`
-                : "— LUNC",
+                ? `${fmtCompact(j.staked)} ${symbol}`
+                : `— ${symbol}`,
           },
           {
             label: "Voting Power",
@@ -71,7 +86,7 @@ export default function NodeStats({ valoper }: { valoper: string }) {
             value:
               typeof j.delegators === "number"
                 ? `${fmtNum(j.delegators, 0)}`
-                : "—",
+                : "Not indexed",
           },
         ];
         setStats(next);
@@ -86,12 +101,12 @@ export default function NodeStats({ valoper }: { valoper: string }) {
       alive = false;
       clearInterval(t);
     };
-  }, [valoper]);
+  }, [network, symbol, valoper]);
 
   return (
     <>
       {stats.map((x) => (
-        <div key={x.label} className="menuCard nodeCard">
+        <div key={x.label} className={className}>
           <div className="nodeLabel">{x.label}</div>
           <div className="nodeValue">{x.value}</div>
         </div>

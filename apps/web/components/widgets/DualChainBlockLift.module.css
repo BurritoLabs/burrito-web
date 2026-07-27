@@ -1,0 +1,433 @@
+.visual {
+  position: relative;
+  width: min(100%, 590px);
+  height: 428px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 248px));
+  justify-content: center;
+  gap: 28px;
+  isolation: isolate;
+  transform: translateX(-18px);
+}
+
+.networkGlow {
+  position: absolute;
+  z-index: -1;
+  top: 44px;
+  width: 250px;
+  height: 280px;
+  border-radius: 50%;
+  filter: blur(42px);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.phoenixGlow {
+  left: 4%;
+  background: #f4a01c;
+}
+
+.classicGlow {
+  top: 72px;
+  right: 0;
+  background: #1f8ed0;
+}
+
+.networkDial {
+  --accent: #f4a01c;
+  --accent-rgb: 244, 160, 28;
+  --pill-width: 208px;
+  --pill-height: 48px;
+  --pill-gap: 15px;
+  --dial-pad: 32px;
+  --step: calc(var(--pill-height) + var(--pill-gap));
+  min-width: 0;
+}
+
+.classic {
+  --accent: #2396d1;
+  --accent-rgb: 35, 150, 209;
+  margin-top: 28px;
+}
+
+.networkLabel {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(234, 245, 235, 0.88);
+  font-family: var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.liveDot {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+  border-radius: 50%;
+  background: #52c41a;
+  box-shadow: 0 0 0 3px rgba(82, 196, 26, 0.12), 0 0 12px rgba(82, 196, 26, 0.52);
+}
+
+.networkName {
+  color: var(--accent);
+}
+
+.chainId {
+  color: rgba(234, 245, 235, 0.42);
+  font-weight: 600;
+}
+
+.dialWindow {
+  position: relative;
+  width: 100%;
+  height: 372px;
+  overflow: visible;
+  filter: brightness(1.07) contrast(1.04);
+}
+
+.dialTrack {
+  position: absolute;
+  top: var(--dial-pad);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pill-gap);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.5) 12%, #000 29%, #000 71%, rgba(0, 0, 0, 0.5) 88%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.5) 12%, #000 29%, #000 71%, rgba(0, 0, 0, 0.5) 88%, transparent 100%);
+}
+
+.blockSlot {
+  --slot-opacity: 1;
+  --from-opacity: 1;
+  --shift-delay: 0ms;
+  width: 100%;
+  height: var(--pill-height);
+  flex: 0 0 var(--pill-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: var(--slot-opacity);
+  transform-origin: center;
+  will-change: transform, opacity, filter;
+}
+
+.blockPill {
+  --pill-scale: 1;
+  box-sizing: border-box;
+  width: var(--pill-width);
+  height: var(--pill-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.9);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.032) 56%, rgba(0, 0, 0, 0.035));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.075),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.16),
+    0 10px 24px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  text-decoration: none;
+  user-select: none;
+  transform: scale(var(--pill-scale));
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.slot0 {
+  --slot-opacity: 0.22;
+}
+
+.slot0 .blockPill {
+  --pill-scale: 0.92;
+  filter: blur(0.7px) saturate(0.82);
+}
+
+.slot1 {
+  --slot-opacity: 0.48;
+  --from-opacity: 0.22;
+  --shift-delay: 0ms;
+}
+
+.slot1 .blockPill {
+  --pill-scale: 0.975;
+  filter: blur(0.15px);
+}
+
+.slot2 {
+  --slot-opacity: 1;
+  --from-opacity: 0.48;
+  --shift-delay: 12ms;
+}
+
+.slot2 .blockPill {
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(180deg, rgba(var(--accent-rgb), 0.085), rgba(255, 255, 255, 0.035) 54%, rgba(0, 0, 0, 0.045));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+    0 14px 30px rgba(0, 0, 0, 0.14);
+}
+
+.slot3 {
+  --slot-opacity: 0.48;
+  --from-opacity: 1;
+  --shift-delay: 22ms;
+}
+
+.slot3 .blockPill {
+  --pill-scale: 0.975;
+  filter: blur(0.15px);
+}
+
+.slot4 {
+  --slot-opacity: 0.22;
+  --from-opacity: 0.48;
+  --shift-delay: 30ms;
+}
+
+.slot4 .blockPill {
+  --pill-scale: 0.92;
+  filter: blur(0.7px) saturate(0.82);
+}
+
+a.blockPill:hover {
+  transform: translateY(-1px) scale(var(--pill-scale));
+  border-color: rgba(var(--accent-rgb), 0.45);
+  background: rgba(var(--accent-rgb), 0.08);
+}
+
+a.blockPill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.loading {
+  color: transparent;
+  animation: loadingBreath 1.8s ease-in-out infinite;
+}
+
+.shiftA {
+  animation: blockShiftA 680ms cubic-bezier(0.16, 1, 0.3, 1) var(--shift-delay) both;
+}
+
+.shiftB {
+  animation: blockShiftB 680ms cubic-bezier(0.16, 1, 0.3, 1) var(--shift-delay) both;
+}
+
+.enterA {
+  animation: blockEnterA 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.enterB {
+  animation: blockEnterB 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.currentBezel {
+  position: absolute;
+  z-index: 2;
+  top: calc(var(--dial-pad) + 2 * (var(--pill-height) + var(--pill-gap)) + (var(--pill-height) / 2));
+  left: 50%;
+  width: calc(var(--pill-width) + 10px);
+  height: calc(var(--pill-height) + 8px);
+  box-sizing: border-box;
+  border: 1px solid rgba(var(--accent-rgb), 0.82);
+  border-radius: 999px;
+  background: transparent;
+  box-shadow:
+    0 0 0 3px rgba(var(--accent-rgb), 0.085),
+    0 0 24px rgba(var(--accent-rgb), 0.11),
+    0 14px 34px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.bezelPulseA {
+  animation: bezelConfirmA 540ms cubic-bezier(0.16, 1, 0.3, 1) 340ms;
+}
+
+.bezelPulseB {
+  animation: bezelConfirmB 540ms cubic-bezier(0.16, 1, 0.3, 1) 340ms;
+}
+
+@keyframes blockShiftA {
+  from {
+    opacity: var(--from-opacity);
+    transform: translateY(calc(-1 * var(--step)));
+    filter: blur(0.7px) brightness(0.94);
+  }
+  to {
+    opacity: var(--slot-opacity);
+    transform: translateY(0);
+    filter: blur(0) brightness(1);
+  }
+}
+
+@keyframes blockShiftB {
+  from {
+    opacity: var(--from-opacity);
+    transform: translateY(calc(-1 * var(--step)));
+    filter: blur(0.7px) brightness(0.94);
+  }
+  to {
+    opacity: var(--slot-opacity);
+    transform: translateY(0);
+    filter: blur(0) brightness(1);
+  }
+}
+
+@keyframes blockEnterA {
+  from {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.96);
+    filter: blur(6px) brightness(0.84);
+  }
+  to {
+    opacity: var(--slot-opacity);
+    transform: translateY(0) scale(1);
+    filter: blur(0) brightness(1);
+  }
+}
+
+@keyframes blockEnterB {
+  from {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.96);
+    filter: blur(6px) brightness(0.84);
+  }
+  to {
+    opacity: var(--slot-opacity);
+    transform: translateY(0) scale(1);
+    filter: blur(0) brightness(1);
+  }
+}
+
+@keyframes bezelConfirmA {
+  0%, 100% {
+    border-color: rgba(var(--accent-rgb), 0.82);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.085), 0 0 24px rgba(var(--accent-rgb), 0.11), 0 14px 34px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    transform: translate(-50%, -50%) scale(1);
+  }
+  48% {
+    border-color: rgba(var(--accent-rgb), 0.96);
+    box-shadow: 0 0 0 5px rgba(var(--accent-rgb), 0.1), 0 0 32px rgba(var(--accent-rgb), 0.17), 0 18px 40px rgba(0, 0, 0, 0.22), inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+    transform: translate(-50%, -50%) scale(1.018);
+  }
+}
+
+@keyframes bezelConfirmB {
+  0%, 100% {
+    border-color: rgba(var(--accent-rgb), 0.82);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.085), 0 0 24px rgba(var(--accent-rgb), 0.11), 0 14px 34px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    transform: translate(-50%, -50%) scale(1);
+  }
+  48% {
+    border-color: rgba(var(--accent-rgb), 0.96);
+    box-shadow: 0 0 0 5px rgba(var(--accent-rgb), 0.1), 0 0 32px rgba(var(--accent-rgb), 0.17), 0 18px 40px rgba(0, 0, 0, 0.22), inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+    transform: translate(-50%, -50%) scale(1.018);
+  }
+}
+
+@keyframes loadingBreath {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.42; }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .visual {
+    height: 416px;
+    transform: none;
+  }
+
+  .classic {
+    margin-top: 16px;
+  }
+
+  .classicGlow {
+    top: 60px;
+  }
+}
+
+@media (max-width: 767px) {
+  .visual {
+    width: 100%;
+    height: 320px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    box-sizing: border-box;
+    padding: 0 8px;
+    transform: none;
+  }
+
+  .networkDial {
+    --pill-width: calc(100% - 12px);
+    --pill-height: 38px;
+    --pill-gap: 10px;
+    --dial-pad: 24px;
+  }
+
+  .classic {
+    margin-top: 0;
+  }
+
+  .networkLabel {
+    height: 24px;
+    gap: 5px;
+    font-size: 9px;
+  }
+
+  .chainId {
+    display: none;
+  }
+
+  .dialWindow {
+    height: 288px;
+  }
+
+  .blockPill {
+    font-size: 11px;
+  }
+
+  .networkGlow {
+    top: 38px;
+    width: 46%;
+    height: 220px;
+    filter: blur(36px);
+    opacity: 0.09;
+  }
+
+  .phoenixGlow {
+    left: 3%;
+  }
+
+  .classicGlow {
+    right: 3%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shiftA,
+  .shiftB,
+  .enterA,
+  .enterB,
+  .bezelPulseA,
+  .bezelPulseB,
+  .loading {
+    animation: none;
+  }
+}
