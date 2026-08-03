@@ -15,19 +15,30 @@ type LiveHeight = {
 };
 
 const NETWORKS = {
-  phoenix: { name: "Terra", chainId: "Phoenix-1", finder: "mainnet" },
-  classic: { name: "Terra Classic", chainId: "Columbus-5", finder: "classic" },
+  phoenix: {
+    name: "Terra",
+    chainId: "Phoenix-1",
+    finder: "mainnet",
+    cadenceMs: 6000,
+  },
+  classic: {
+    name: "Terra Classic",
+    chainId: "Columbus-5",
+    finder: "classic",
+    cadenceMs: 6000,
+  },
 } as const;
 
 function useLiveHeight(network: Network): LiveHeight {
   const [live, setLive] = useState<LiveHeight>({ height: null, sequence: 0 });
-  const lastHeight = useRef<number | null>(null);
+  const confirmedHeight = useRef<number | null>(null);
+  const displayedHeight = useRef<number | null>(null);
 
   useEffect(() => {
     let active = true;
     let inFlight = false;
 
-    const tick = async () => {
+    const tick = async (syncDisplayed = false) => {
       if (!active || inFlight || document.visibilityState === "hidden") return;
       inFlight = true;
 
@@ -36,14 +47,24 @@ function useLiveHeight(network: Network): LiveHeight {
           cache: "no-store",
         });
         const payload = (await response.json()) as LatestResponse;
-        if (!active || !payload.ok || payload.height === lastHeight.current) return;
+        if (!active || !payload.ok) return;
 
-        const firstHeight = lastHeight.current === null;
-        lastHeight.current = payload.height;
-        setLive((current) => ({
-          height: payload.height,
-          sequence: firstHeight ? current.sequence : current.sequence + 1,
-        }));
+        confirmedHeight.current = confirmedHeight.current === null
+          ? payload.height
+          : Math.max(confirmedHeight.current, payload.height);
+
+        const firstHeight = displayedHeight.current === null;
+        const shouldSync = firstHeight || (
+          syncDisplayed && confirmedHeight.current !== displayedHeight.current
+        );
+
+        if (shouldSync) {
+          displayedHeight.current = confirmedHeight.current;
+          setLive((current) => ({
+            height: confirmedHeight.current,
+            sequence: firstHeight ? 0 : current.sequence + 1,
+          }));
+        }
       } catch {
         // Keep the last confirmed height through temporary endpoint failures.
       } finally {
@@ -51,14 +72,34 @@ function useLiveHeight(network: Network): LiveHeight {
       }
     };
 
+    const advance = async () => {
+      if (!active || document.visibilityState === "hidden") return;
+
+      await tick();
+
+      const confirmed = confirmedHeight.current;
+      const displayed = displayedHeight.current;
+      if (confirmed === null || displayed === null || confirmed <= displayed) return;
+
+      const nextHeight = displayed + 1;
+      displayedHeight.current = nextHeight;
+      setLive((current) => ({
+        height: nextHeight,
+        sequence: current.sequence + 1,
+      }));
+    };
+
     void tick();
-    const timer = window.setInterval(tick, 2400);
-    const onVisibilityChange = () => void tick();
+    const cadenceTimer = window.setInterval(
+      () => void advance(),
+      NETWORKS[network].cadenceMs,
+    );
+    const onVisibilityChange = () => void tick(true);
     document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
       active = false;
-      window.clearInterval(timer);
+      window.clearInterval(cadenceTimer);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [network]);
