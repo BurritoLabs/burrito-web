@@ -15,7 +15,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@burritolabs/ui": "github:BurritoLabs/burrito-design-system#a1178b3",
+    "@burritolabs/ui": "github:BurritoLabs/burrito-design-system#8b5ee0f",
     "next": "^15.5.22",
     "react": "19.2.3",
     "react-dom": "19.2.3"

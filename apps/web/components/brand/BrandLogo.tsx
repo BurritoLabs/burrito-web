@@ -1,5 +1,6 @@
 ﻿import React from "react";
 import Image from "next/image";
+import "./BrandLogo.css";
 
 export default function BrandLogo({
   textSize = 20,
@@ -13,6 +14,7 @@ export default function BrandLogo({
   return (
     <span
       aria-label="Burrito"
+      className="burrito-responsive-brand"
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -22,6 +24,7 @@ export default function BrandLogo({
       }}
     >
       <Image
+        className="burrito-responsive-brand__icon"
         src="/brand/icon.png"
         alt="Burrito"
         width={iconSize}
@@ -34,11 +37,12 @@ export default function BrandLogo({
       />
 
       <span
+        className="burrito-responsive-brand__wordmark"
         style={{
           fontSize: textSize,
           fontWeight: 650,
           letterSpacing: "-0.05em",
-          color: "#FFFFFF",
+          color: "var(--bui-color-text)",
           lineHeight: "1em",
           display: "block",
           fontFamily:

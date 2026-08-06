@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 /* IMPORTANT: CSS @import must come before other rules */
 
 
@@ -178,7 +178,7 @@ a{
   font-weight: 900;
   letter-spacing: -0.035em;
   line-height: 1.12;
-  color: #FFFFFF;
+  color: var(--bui-color-text);
   font-family: var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif;
 }
 .valueLead{
@@ -186,14 +186,14 @@ a{
   max-width: 640px;
   font-size: 16.5px;
   line-height: 1.75;
-  color: rgba(234,245,235,0.78);
+  color: var(--bui-color-text-secondary);
 }
 .valueSignal{
   margin-top: 18px;
   font-size: 13px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(234,245,235,0.62);
+  color: var(--bui-color-text-secondary);
 }
 .valueCardStack{
   display: grid;
@@ -207,12 +207,12 @@ a{
   font-size: 16px;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #FFFFFF;
+  color: var(--bui-color-text);
   margin-bottom: 6px;
 }
 .valueCardDesc{
   margin: 0;
-  color: rgba(234,245,235,0.78);
+  color: var(--bui-color-text-secondary);
   line-height: 1.6;
   font-size: 14.5px;
 }
@@ -236,12 +236,12 @@ a{
   font-weight: 900;
   letter-spacing: -0.03em;
   line-height: 1.2;
-  color: #FFFFFF;
+  color: var(--bui-color-text);
   font-family: var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif;
 }
 .featuresLead{
   margin: 0;
-  color: rgba(234,245,235,0.78);
+  color: var(--bui-color-text-secondary);
   line-height: 1.7;
 }
 .featuresGrid{
@@ -259,11 +259,11 @@ a{
   font-size: 16px;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #FFFFFF;
+  color: var(--bui-color-text);
 }
 .featuresCardDesc{
   margin: 10px 0 0;
-  color: rgba(234,245,235,0.76);
+  color: var(--bui-color-text-secondary);
   line-height: 1.6;
   font-size: 14.5px;
 }
@@ -283,13 +283,13 @@ a{
   font-weight: 900;
   letter-spacing: -0.03em;
   line-height: 1.2;
-  color: #FFFFFF;
+  color: var(--bui-color-text);
   font-family: var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif;
 }
 .nodeLead{
   margin: 0;
   max-width: 620px;
-  color: rgba(234,245,235,0.78);
+  color: var(--bui-color-text-secondary);
   line-height: 1.7;
 }
 .nodeMeta{
@@ -297,7 +297,7 @@ a{
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(234,245,235,0.52);
+  color: var(--bui-color-text-secondary);
 }
 .nodeStats{
   display: grid;
@@ -315,14 +315,14 @@ a{
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(234,245,235,0.62);
+  color: var(--bui-color-text-secondary);
 }
 .nodeValue{
   margin-top: 10px;
   font-size: 22px;
   font-weight: 900;
   letter-spacing: -0.02em;
-  color: #FFFFFF;
+  color: var(--bui-color-text);
   font-family: var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif;
 }
 
@@ -464,7 +464,7 @@ a{
 .btnSecondary:hover{
   transform: translateY(-1px);
   background: rgba(234,245,235,0.08);
-  border-color: rgba(234,245,235,0.20);
+  border-color: var(--bui-color-text-secondary);
 }
 
 /* =========================
@@ -498,7 +498,7 @@ a{
 
 .siteFooterWordmark{
   display:inline-flex;
-  color:#fff;
+  color: var(--bui-color-text);
   font-family:var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif;
   font-size:22px;
   font-weight:850;
@@ -512,7 +512,7 @@ a{
 .siteFooterBrand p{
   max-width:340px;
   margin:18px 0 0;
-  color:rgba(234,245,235,0.5);
+  color: var(--bui-color-text-secondary);
   font-size:13px;
   letter-spacing:0;
   line-height:1.7;
@@ -533,7 +533,7 @@ a{
 
 .siteFooterLabel{
   margin-bottom:5px;
-  color:rgba(234,245,235,0.38);
+  color: var(--bui-color-text-secondary);
   font-size:10px;
   font-weight:700;
   letter-spacing:0;
@@ -542,7 +542,7 @@ a{
 }
 
 .siteFooter .footerLink{
-  color:rgba(234,245,235,0.68);
+  color: var(--bui-color-text-secondary);
   font-size:13px;
   font-weight:600;
   letter-spacing:0;
@@ -556,7 +556,7 @@ a{
   gap:20px;
   padding-top:22px;
   border-top:1px solid rgba(234,245,235,0.09);
-  color:rgba(234,245,235,0.38);
+  color: var(--bui-color-text-secondary);
   font-size:11px;
   font-weight:600;
   letter-spacing:0;
@@ -1084,7 +1084,7 @@ h2, h3{
     background:currentColor;
   }
   .navMenuButton:hover{
-    color:#FFFFFF;
+    color: var(--bui-color-text);
   }
   .navMenuButton:focus-visible{
     outline:2px solid rgba(82,196,26,0.8);
@@ -1194,11 +1194,11 @@ h2, h3{
   }
   .mobileNavLink:hover,
   .mobileNavLink:focus-visible{
-    color:#FFFFFF;
+    color: var(--bui-color-text);
     background:rgba(255,255,255,0.07);
   }
   .mobileNavLink[aria-current="page"]{
-    color:#FFFFFF;
+    color: var(--bui-color-text);
     text-decoration:underline;
     text-underline-offset:4px;
   }
@@ -1234,8 +1234,9 @@ h2, h3{
   }
 
    .heroLeft h1{
-    font-size: clamp(40px, 9vw, 56px);
+    font-size: clamp(34px, 9vw, 48px);
     line-height: 1.08;
+    overflow-wrap: anywhere;
   }
 
   .hero p{

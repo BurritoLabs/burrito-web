@@ -30,7 +30,7 @@ export default function Page() {
                     margin: "0 0 14px",
                     fontWeight: 900,
                     letterSpacing: "-0.045em",
-                    color: "#FFFFFF",
+                    color: "var(--bui-color-text)",
                     fontFamily:
                       "var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif",
                   }}
@@ -43,7 +43,7 @@ export default function Page() {
                 <p
                   style={{
                     margin: "0 0 20px",
-                    color: "rgba(234,245,235,0.72)",
+                    color: "var(--bui-color-text-secondary)",
                     maxWidth: 520,
                   }}
                 >
