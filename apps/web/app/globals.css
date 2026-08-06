@@ -6,16 +6,16 @@
    Theme tokens
    ========================= */
 :root{
-  --bg:#0c1411;
-  --fg:#eaf5eb;
+  --bg:var(--bui-color-canvas);
+  --fg:var(--bui-color-text);
 
-  --surface: rgba(255,255,255,0.04);
-  --surface2: rgba(255,255,255,0.06);
+  --surface: var(--bui-color-surface);
+  --surface2: var(--bui-color-surface-raised);
 
-  --border: rgba(255,255,255,0.10);
-  --border2: rgba(255,255,255,0.18);
+  --border: var(--bui-color-border);
+  --border2: var(--bui-color-border-strong);
 
-  --green:#52C41A;
+  --green:var(--bui-color-brand);
 }
 
 /* =========================
@@ -28,9 +28,9 @@ body{
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 
   background:
-  radial-gradient(1600px 900px at 12% -20%, rgba(255,255,255,0.045), transparent 70%),
-  radial-gradient(1400px 800px at 88% -10%, rgba(82,196,26,0.035), transparent 72%),
-  linear-gradient(180deg, #0e1714 0%, #0c1411 55%, #08110f 100%);
+  radial-gradient(1600px 900px at 12% -20%, color-mix(in srgb, var(--bui-color-text) 4.5%, transparent), transparent 70%),
+  radial-gradient(1400px 800px at 88% -10%, color-mix(in srgb, var(--bui-color-brand) 3.5%, transparent), transparent 72%),
+  linear-gradient(180deg, var(--bui-color-surface-raised) 0%, var(--bui-color-canvas) 55%, var(--bui-color-surface-sunken) 100%);
 background-color: var(--bg);}
 
 html{
@@ -85,7 +85,7 @@ a{
   align-items:center;
   justify-content:center;
   border-radius:6px;
-  color:#A1A1AA;
+  color:var(--bui-color-text-muted);
   font-family:"Gotham", var(--font-ui);
   font-size:14px;
   font-weight:500;
@@ -97,17 +97,17 @@ a{
 }
 .siteNavLink:hover,
 .siteNavLink:focus-visible{
-  color:#F2F2F2;
+  color:var(--bui-color-text);
   text-decoration:underline;
 }
 .siteNavLink[aria-current="page"]{
-  color:#F2F2F2;
+  color:var(--bui-color-text);
   text-decoration:underline;
 }
 .headerActions{
   display:flex;
   align-items:center;
-  gap:0;
+  gap:8px;
 }
 .navMenuButton,
 .mobileNavLayer{

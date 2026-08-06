@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BrandLogo from "../components/brand/BrandLogo";
 import LaunchButton from "../components/buttons/LaunchButton";
+import { BurritoThemeSwitcher } from "@burritolabs/ui";
 
 const H = 57;
 const NAV_ITEMS = [
@@ -139,6 +140,7 @@ export default function Header() {
 
               {/* 右侧留白 8（和 logo 对称） */}
               <div className="headerActions">
+                <BurritoThemeSwitcher />
                 <LaunchButton
                   href="https://app.burrito.money"
                   className="btnPrimary hdrCta headerLaunchCta"

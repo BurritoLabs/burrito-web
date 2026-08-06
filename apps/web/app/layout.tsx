@@ -1,9 +1,13 @@
 ﻿import {Montserrat, Inter} from "next/font/google";
 import { Nunito_Sans } from "next/font/google";
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import BackToTop from "../components/navigation/BackToTop";
 import { createPageMetadata } from "./metadata";
+import { BurritoThemeProvider } from "@burritolabs/ui";
+import { burritoThemeBootstrapScript } from "@burritolabs/ui/theme-script";
+import "@burritolabs/ui/tokens.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,11 +46,22 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
       className={`${montserrat.variable} ${nunito.variable} ${inter.variable}`}
     >
+      <head>
+        <meta name="theme-color" content="#070D0B" />
+      </head>
       <body className={`${montserrat.variable} ${nunito.variable} ${inter.variable}`}>
-        {children}
-        <BackToTop />
+        <Script
+          id="burrito-theme-bootstrap"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: burritoThemeBootstrapScript }}
+        />
+        <BurritoThemeProvider>
+          {children}
+          <BackToTop />
+        </BurritoThemeProvider>
       </body>
     </html>
   );
