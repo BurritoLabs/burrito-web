@@ -10,5 +10,11 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
-  }
+  },
+  "routes": [
+    {
+      "pattern": "burrito.money",
+      "custom_domain": true
+    }
+  ]
 }
