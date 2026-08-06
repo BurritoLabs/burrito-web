@@ -7,7 +7,7 @@ import BrandLogo from "../components/brand/BrandLogo";
 import LaunchButton from "../components/buttons/LaunchButton";
 import { BurritoThemeSwitcher } from "@burritolabs/ui";
 
-const H = 57;
+const H = 56;
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Ecosystem", href: "/ecosystem" },
@@ -96,10 +96,10 @@ export default function Header() {
           transition:
             "transform 300ms ease, opacity 300ms ease, background-color 300ms ease, box-shadow 300ms ease",
 
-          backgroundColor: atTop ? "transparent" : "rgba(12,20,17,0.70)",
+          backgroundColor: atTop ? "transparent" : "var(--bui-color-glass)",
 
           // ✅ 细线：不用子元素，直接 inset shadow，稳
-          boxShadow: atTop ? "none" : "inset 0 -1px 0 rgba(234,245,235,0.12)",
+          boxShadow: atTop ? "none" : "inset 0 -1px 0 var(--bui-color-border)",
 
           border: 0,
           outline: 0,

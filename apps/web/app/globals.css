@@ -1045,7 +1045,7 @@ h2, h3{
 
 @media (max-width:767px){
   .header1400{
-    padding:0 11px;
+    padding:0 16px;
   }
   .headerBar{
     display:flex;
@@ -1056,7 +1056,7 @@ h2, h3{
     display:none;
   }
   .headerActions{
-    gap:0;
+    gap:6px;
   }
   .headerLaunchCta{
     height:34px !important;
@@ -1064,13 +1064,13 @@ h2, h3{
     font-size:11px !important;
   }
   .navMenuButton{
-    width:36px;
+    width:34px;
     height:40px;
     padding:0 8px;
     border:0;
     border-radius:4px;
     background:transparent;
-    color:#F2F2F2;
+    color:var(--bui-color-text);
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -1304,4 +1304,15 @@ h2, h3{
 
 .backToTop:hover{
   background: #49ad17;
+}
+html .bui-theme-toggle {
+  width: 34px;
+  height: 34px;
+  flex-basis: 34px;
+  border-radius: 999px;
+}
+
+html .bui-theme-toggle svg {
+  width: 16px;
+  height: 16px;
 }
