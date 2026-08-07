@@ -1,16 +1,17 @@
 import LaunchButton from "../../components/buttons/LaunchButton";
+import SiteFrame from "../../components/site/SiteFrame";
 
 const fontDisplay =
   "var(--font-montserrat), Montserrat, Inter, system-ui, sans-serif";
 
 export default function ComingSoonPage() {
   return (
-    <main className="pageAtmosphere">
-      <div className="wrap1400" style={{ minHeight: "100vh" }}>
+    <SiteFrame>
+      <div className="wrap1400" style={{ minHeight: "calc(100vh - 57px)" }}>
         <div
           style={{
             display: "flex",
-            minHeight: "100vh",
+            minHeight: "calc(100vh - 57px)",
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -32,7 +33,7 @@ export default function ComingSoonPage() {
                 fontSize: "clamp(32px, 3.6vw, 44px)",
                 fontWeight: 900,
                 letterSpacing: "-0.03em",
-                color: "#FFFFFF",
+                color: "var(--bui-color-text)",
                 fontFamily: fontDisplay,
               }}
             >
@@ -54,6 +55,6 @@ export default function ComingSoonPage() {
           </div>
         </div>
       </div>
-    </main>
+    </SiteFrame>
   );
 }

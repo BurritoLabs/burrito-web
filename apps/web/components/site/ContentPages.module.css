@@ -513,6 +513,21 @@
   line-height: 1.45;
 }
 
+:global(:root[data-theme="light"]) .pageLabel,
+:global(:root[data-theme="light"]) .kicker {
+  color: #287a12;
+}
+
+:global(:root[data-theme="light"]) .contextRow strong,
+:global(:root[data-theme="light"]) .factValue,
+:global(:root[data-theme="light"]) .textLink {
+  color: var(--bui-color-text);
+}
+
+:global(:root[data-theme="light"]) .networkId {
+  color: color-mix(in srgb, var(--network-accent) 72%, #111c16);
+}
+
 .networkArticle .linkRow {
   margin-top: 26px;
   gap: 20px;
