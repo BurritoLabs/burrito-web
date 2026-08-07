@@ -615,6 +615,48 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
+:global(:root[data-theme="light"]) .inlineLink,
+:global(:root[data-theme="light"]) .allocationNumber,
+:global(:root[data-theme="light"]) .networkDestinations strong,
+:global(:root[data-theme="light"]) .networkFooter strong {
+  color: var(--bui-color-text);
+}
+
+:global(:root[data-theme="light"]) .communityScope strong,
+:global(:root[data-theme="light"]) .allocationNumber span {
+  color: #2f7d0c;
+}
+
+:global(:root[data-theme="light"]) .classicDestination span {
+  color: #1769aa;
+}
+
+:global(:root[data-theme="light"]) .terraDestination span {
+  color: #9a3412;
+}
+
+:global(:root[data-theme="light"]) .secondaryLink {
+  border-color: var(--bui-color-border-strong);
+  background: color-mix(in srgb, var(--bui-color-surface) 78%, transparent);
+  color: var(--bui-color-text);
+}
+
+:global(:root[data-theme="light"]) .secondaryLink:hover {
+  border-color: color-mix(in srgb, var(--bui-color-text-secondary) 58%, transparent);
+  background: var(--bui-color-surface);
+}
+
+:global(:root[data-theme="light"]) .capability,
+:global(:root[data-theme="light"]) .validatorGrid {
+  border-color: var(--bui-color-border);
+  background: color-mix(in srgb, var(--bui-color-surface) 72%, transparent);
+}
+
+:global(:root[data-theme="light"]) .capability:hover {
+  border-color: color-mix(in srgb, var(--bui-color-brand) 36%, var(--bui-color-border));
+  background: var(--bui-color-surface);
+}
+
 @media (max-width: 900px) {
   .capabilityGrid {
     grid-template-columns: 1fr;

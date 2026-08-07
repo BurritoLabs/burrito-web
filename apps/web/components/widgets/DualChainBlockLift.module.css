@@ -184,6 +184,36 @@
   animation: currentBlockBreath 1s ease-in-out infinite;
 }
 
+:global(:root[data-theme="light"]) .blockPill {
+  border-color: var(--bui-color-border-strong);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--bui-color-surface) 92%, transparent),
+    color-mix(in srgb, var(--bui-color-surface-sunken) 74%, transparent)
+  );
+  color: var(--bui-color-text);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 10px 24px rgba(30, 54, 39, 0.08);
+}
+
+:global(:root[data-theme="light"]) .slot2 .blockPill {
+  border-color: color-mix(in srgb, var(--accent) 62%, var(--bui-color-border-strong));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 9%, var(--bui-color-surface)),
+    color-mix(in srgb, var(--bui-color-surface-sunken) 82%, transparent)
+  );
+}
+
+:global(:root[data-theme="light"]) .phoenix .networkName {
+  color: #9a3412;
+}
+
+:global(:root[data-theme="light"]) .classic .networkName {
+  color: #1769aa;
+}
+
 .slot3 {
   --slot-opacity: 0.48;
   --from-opacity: 1;
