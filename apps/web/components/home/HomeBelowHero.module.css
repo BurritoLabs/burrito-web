@@ -39,7 +39,7 @@
 }
 
 .kicker {
-  color: #62d32c;
+  color: var(--bui-color-brand-text);
   font-size: 12px;
   font-weight: 750;
   letter-spacing: 0;
@@ -119,7 +119,7 @@
 }
 
 .capabilityMeta span:first-child {
-  color: #62d32c;
+  color: var(--bui-color-brand-text);
 }
 
 .capabilityMeta span:last-child {
@@ -310,7 +310,7 @@
 
 .allocationNumber span {
   margin-left: 3px;
-  color: #62d32c;
+  color: var(--bui-color-brand-text);
   font-size: 18px;
   font-weight: 800;
   vertical-align: 8px;
@@ -408,7 +408,7 @@
 
 .network,
 .validator {
-  --network-accent: #f4a01c;
+  --network-accent: var(--bui-chain-luna-text);
   min-width: 0;
 }
 
@@ -418,11 +418,11 @@
 }
 
 .terra {
-  --network-accent: #f4a01c;
+  --network-accent: var(--bui-chain-luna-text);
 }
 
 .classic {
-  --network-accent: #2396d1;
+  --network-accent: var(--bui-chain-lunc-text);
 }
 
 .network {
@@ -514,7 +514,7 @@
 
 .validatorTitle b {
   margin-left: auto;
-  color: #65d32f;
+  color: var(--bui-color-success);
   font-size: 10px;
   font-weight: 750;
   text-transform: uppercase;

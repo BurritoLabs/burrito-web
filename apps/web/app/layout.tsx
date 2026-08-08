@@ -33,7 +33,11 @@ export const metadata: Metadata = {
     path: "/",
   }),
   icons: {
-    icon: "/burrito-favicon.png",
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/burrito-favicon.png", type: "image/png", sizes: "64x64" },
+    ],
+    shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
 };
