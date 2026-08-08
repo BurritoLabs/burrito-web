@@ -5,7 +5,7 @@ import "./BrandLogo.css";
 export default function BrandLogo({
   textSize = 20,
   iconSize = 24,
-  gap = 8,
+  gap = 6,
 }: {
   textSize?: number;
   iconSize?: number;
