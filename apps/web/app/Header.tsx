@@ -98,8 +98,7 @@ export default function Header() {
 
           backgroundColor: atTop ? "transparent" : "var(--bui-color-glass)",
 
-          // ✅ 细线：不用子元素，直接 inset shadow，稳
-          boxShadow: atTop ? "none" : "inset 0 -1px 0 var(--bui-color-border)",
+          boxShadow: "inset 0 -1px 0 var(--bui-color-shell-divider)",
 
           border: 0,
           outline: 0,
